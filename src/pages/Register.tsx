@@ -1,5 +1,5 @@
 import {SyntheticEvent, useState} from "react";
-import * as axios from "axios";
+import axios from "axios";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("")
@@ -11,7 +11,7 @@ const Register = () => {
     const url = "http://localhost:3000/auth/register"
     const [redirect, setRedirect] = useState(false);
 
-    const submit = (e: SyntheticEvent) => {
+    const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
         const data = {
@@ -23,7 +23,7 @@ const Register = () => {
 
         console.log(data)
 
-        let res = axios.post(url, data)
+        let res = await axios.post(url, data)
 
 
     }
