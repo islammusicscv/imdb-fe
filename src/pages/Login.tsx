@@ -1,6 +1,7 @@
 import {SyntheticEvent, useState} from "react";
 import axios from "axios";
 import {Navigate} from "react-router-dom";
+import api from "../api/axios.ts";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -8,7 +9,7 @@ const Login = () => {
 
     const [errorMessage, setErrorMessage] = useState("")
 
-    const url = "http://localhost:3000/auth/login"
+    const url = 'auth/login'
     const [redirect, setRedirect] = useState(false);
 
 
@@ -23,8 +24,10 @@ const Login = () => {
         console.log(data)
 
         try {
-            const res = await axios.post(url, data)
+            const res = await api.post(url, data)
             if (res.status === 201) {
+                const token = res.data.access_token;
+                localStorage.setItem('token', token);
                 setRedirect(true)
                 console.log(res)
             }
