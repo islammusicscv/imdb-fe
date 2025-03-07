@@ -1,23 +1,36 @@
+import {Navigate} from "react-router-dom";
+import {useState} from "react";
+
 const Header = () => {
-  return (
+    const [logout, setLogout] = useState(false);
+
+    const logoutUser = (e:React.MouseEvent) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        setLogout(true);
+    }
+
+    if (logout) {
+        return <Navigate to="/login" />
+    }
+
+    return (
       <>
           <header data-bs-theme="dark">
               <div className="collapse text-bg-dark" id="navbarHeader">
                   <div className="container">
                       <div className="row">
                           <div className="col-sm-8 col-md-7 py-4">
-                              <h4>About</h4>
-                              <p className="text-body-secondary">Add some information about the album below, the author,
-                                  or any other background context. Make it a few sentences long so folks can pick up
-                                  some informative tidbits. Then, link them off to some social networking sites or
-                                  contact information.</p>
+                              <h4>O filmih</h4>
+                              <p className="text-body-secondary">To je aplikacija, ki prikazuje filme.</p>
                           </div>
                           <div className="col-sm-4 offset-md-1 py-4">
-                              <h4>Contact</h4>
+                              <h4>Meni</h4>
                               <ul className="list-unstyled">
-                                  <li><a href="#" className="text-white">Follow on Twitter</a></li>
-                                  <li><a href="#" className="text-white">Like on Facebook</a></li>
-                                  <li><a href="#" className="text-white">Email me</a></li>
+                                  <li><a href="/" className="text-white">Home</a></li>
+                                  <li><a href="/movies" className="text-white">Filmi</a></li>
+                                  <li><a href="/login" className="text-white">Prijava</a></li>
+                                  <li><a href="#" onClick={logoutUser} className="text-white">Odjava</a></li>
                               </ul>
                           </div>
                       </div>
