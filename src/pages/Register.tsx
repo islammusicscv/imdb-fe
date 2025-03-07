@@ -1,5 +1,6 @@
 import {SyntheticEvent, useState} from "react";
 import axios from "axios";
+import {Navigate} from "react-router-dom";
 
 const Register = () => {
     const [firstName, setFirstName] = useState("")
@@ -25,7 +26,16 @@ const Register = () => {
 
         let res = await axios.post(url, data)
 
+        console.log(res)
 
+        if (res.status === 201) {
+            setRedirect(true)
+        }
+
+    }
+
+    if (redirect) {
+        return <Navigate to="/login" />
     }
 
     return (
