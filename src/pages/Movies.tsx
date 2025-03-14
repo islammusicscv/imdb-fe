@@ -46,7 +46,7 @@ const Movies = () => {
     }
 
     const editMovie = (id: number) => {
-        const url = `/movies/${id}`;
+        const url = `/movieEdit/${id}`;
         nav(url)
     }
 
