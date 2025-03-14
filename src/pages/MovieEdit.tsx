@@ -13,7 +13,6 @@ const MovieEdit = () => {
     const[genres,setGenres] = useState([]);
     const[rating, setRating] = useState('');
     const[redirect, setRedirect] = useState(false);
-    const[movie,setMovie] = useState([]);
 
     useEffect(() => {
         //pridobim podatke o filmu, ki ga urejam
@@ -22,11 +21,13 @@ const MovieEdit = () => {
             try {
                 const data = await api.get(url)
                 if (data.status === 200) {
-                    setTitle(data.data.title)
-                    setDescription(data.data.description)
-                    setReleaseDate(data.data.release_date)
-                    setGenreId(data.data.genre_id)
-                    setRating(data.data.rating)
+                    console.log(data.data);
+                    const movie = data.data
+                    setTitle(movie.title)
+                    setDescription(movie.description)
+                    setReleaseDate(movie.release_date)
+                    setGenreId(movie.genre.id)
+                    setRating(movie.rating)
                 }
             }
             catch (e) {
@@ -49,7 +50,7 @@ const MovieEdit = () => {
         }
         fetchGenres()
         fetchMovie()
-    }, [])
+    }, [id])
 
 
     const submit = async (e: React.FormEvent) => {
@@ -66,9 +67,9 @@ const MovieEdit = () => {
         }
 
         try {
-            const url = '/movies'
-            const res = await api.post(url, data)
-            if (res.status === 201) {
+            const url = `/movies/${id}`
+            const res = await api.patch(url, data)
+            if (res.status === 200) {
                 //redirect
                 setRedirect(true)
             }
@@ -129,6 +130,7 @@ const MovieEdit = () => {
                         <div className="form-label">Genres</div>
                         <select
                             className="form-control"
+                            value={genreId}
                             onChange={(e) => setGenreId(e.target.value)}
                         >
                             <option>Izberi žanr ...</option>
@@ -139,7 +141,7 @@ const MovieEdit = () => {
                             ))}
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary">Dodaj</button>
+                    <button type="submit" className="btn btn-primary">Shrani</button>
                 </form>
             </div>
         </>

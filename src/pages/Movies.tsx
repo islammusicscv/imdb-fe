@@ -2,11 +2,14 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Card from "../commponents/Card.tsx";
 import api from "../api/axios.ts";
+import {useNavigate} from "react-router-dom";
 
 const Movies = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [movies, setMovies] = useState([])
     const url = "movies"
+
+    const nav = useNavigate()
 
     const loadMovies = async () => {
         try {
@@ -42,6 +45,11 @@ const Movies = () => {
         }
     }
 
+    const editMovie = (id: number) => {
+        const url = `/movies/${id}`;
+        nav(url)
+    }
+
     useEffect( () => {
         loadMovies()
     }, [])
@@ -54,7 +62,7 @@ const Movies = () => {
                         <div className="col">
                             {
                                 movies.map((movie, i) => {
-                                    return <Card key={i} data={movie} deleteMovie={deleteMovie} />
+                                    return <Card key={i} data={movie} deleteMovie={deleteMovie} editMovie={editMovie} />
                                 })
                             }
                         </div>

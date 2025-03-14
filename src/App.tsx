@@ -18,7 +18,7 @@ function App() {
                   <Route path="/login" element={<Login />} />
                   <Route path="/movies" element={<Movies />} />
                   <Route path="/movieAdd" element={<MovieAdd />} />
-                  <Route path="/movieEdit" element={<MovieEdit />} />
+                  <Route path="/movieEdit/:id" element={<MovieEdit />} />
               </Routes>
           </Wrapper>
       </>
