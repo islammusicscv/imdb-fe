@@ -1,4 +1,5 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import api from "../api/axios.ts";
 
 const MovieAdd = () => {
     const[title, setTitle] = useState('');
@@ -8,12 +9,30 @@ const MovieAdd = () => {
     const[genres,setGenres] = useState('');
     const[rating, setRating] = useState('');
 
+    useEffect(() => {
+        //grem v backend po vse zanre
+        const url = "/genres"
+        try {
+            const data = await api.get(url)
+            if (data.status === 200) {
+                setGenres(data.data)
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }, [])
+
+
+    const submit = () => {
+
+    }
 
 
     return (
         <>
             <div className="container">
-                <form onSubmit={}>
+                <form onSubmit={submit}>
                     <div className="mb-3">
                         <div className="form-label">Title</div>
                         <input
@@ -51,12 +70,6 @@ const MovieAdd = () => {
                     </div>
                     <div className="mb-3">
                         <div className="form-label">Genres</div>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Vstavi datum izzida"
-                                    onChange={(e) => setReleaseDate(e.target.value)}
-                                />
 
                     </div>
                     <button type="submit" className="btn btn-primary">Dodaj</button>
