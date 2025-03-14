@@ -23,6 +23,19 @@ const Movies = () => {
         }
     }
 
+    const deleteMovie = async (id: number) => {
+        const url = `/movies/${id}`;
+        try {
+            const res = await api.delete(url)
+            if (res.status === 200) {
+                console.log('Brisanje uspešno')
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect( () => {
         loadMovies()
     }, [])
@@ -35,7 +48,7 @@ const Movies = () => {
                         <div className="col">
                             {
                                 movies.map((movie, i) => {
-                                    return <Card key={i} data={movie} />
+                                    return <Card key={i} data={movie} deleteMovie={deleteMovie} />
                                 })
                             }
                         </div>

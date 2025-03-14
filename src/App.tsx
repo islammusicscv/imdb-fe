@@ -5,6 +5,7 @@ import Register from "./pages/Register.tsx";
 import Login from "./pages/Login.tsx";
 import Wrapper from "./commponents/Wrapper.tsx";
 import Movies from "./pages/Movies.tsx";
+import MovieAdd from "./pages/MovieAdd.tsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/movies" element={<Movies />} />
+                  <Route path="/movieAdd" element={<MovieAdd />} />
               </Routes>
           </Wrapper>
       </>
