@@ -49,9 +49,20 @@ const MovieAdd = () => {
                             onChange={(e) => setRating(e.target.value)}
                         />
                     </div>
+                    <div className="mb-3">
+                        <div className="form-label">Genres</div>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Vstavi datum izzida"
+                                    onChange={(e) => setReleaseDate(e.target.value)}
+                                />
+
+                    </div>
+                    <button type="submit" className="btn btn-primary">Dodaj</button>
                 </form>
             </div>
         </>
-    )
+)
 }
 export default MovieAdd
