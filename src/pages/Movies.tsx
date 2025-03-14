@@ -24,11 +24,17 @@ const Movies = () => {
     }
 
     const deleteMovie = async (id: number) => {
+        const check = window.confirm("Are you sure you want to delete this movie?")
+        if (!check) return
+
         const url = `/movies/${id}`;
         try {
             const res = await api.delete(url)
             if (res.status === 200) {
                 console.log('Brisanje uspešno')
+
+                //brisani film odstrani iz seznama
+                setMovies((oldMovies) => oldMovies.filter((movie) => movie.id !== id))
             }
         }
         catch (error) {

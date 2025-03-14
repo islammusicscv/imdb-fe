@@ -1,9 +1,11 @@
 import {useEffect, useState} from "react";
 import api from "../api/axios.ts";
 import * as React from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 
-const MovieAdd = () => {
+const MovieEdit = () => {
+    const { id }  = useParams<{id: string}>();
+
     const[title, setTitle] = useState('');
     const[description, setDescription] = useState('');
     const[releaseDate, setReleaseDate] = useState('');
@@ -11,8 +13,27 @@ const MovieAdd = () => {
     const[genres,setGenres] = useState([]);
     const[rating, setRating] = useState('');
     const[redirect, setRedirect] = useState(false);
+    const[movie,setMovie] = useState([]);
 
     useEffect(() => {
+        //pridobim podatke o filmu, ki ga urejam
+        const fetchMovie = async () => {
+            const url = `/movies/${id}`
+            try {
+                const data = await api.get(url)
+                if (data.status === 200) {
+                    setTitle(data.data.title)
+                    setDescription(data.data.description)
+                    setReleaseDate(data.data.release_date)
+                    setGenreId(data.data.genre_id)
+                    setRating(data.data.rating)
+                }
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+
         //grem v backend po vse zanre
         const fetchGenres = async () => {
             const url = "/genres"
@@ -27,6 +48,7 @@ const MovieAdd = () => {
             }
         }
         fetchGenres()
+        fetchMovie()
     }, [])
 
 
@@ -70,6 +92,7 @@ const MovieAdd = () => {
                             type="text"
                             className="form-control"
                             placeholder="Vstavi ime"
+                            value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </div>
@@ -78,6 +101,7 @@ const MovieAdd = () => {
                         <textarea
                             className="form-control"
                             placeholder="Vstavi opis"
+                            value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
@@ -87,6 +111,7 @@ const MovieAdd = () => {
                             type="date"
                             className="form-control"
                             placeholder="Vstavi datum izzida"
+                            value={releaseDate}
                             onChange={(e) => setReleaseDate(e.target.value)}
                         />
                     </div>
@@ -96,6 +121,7 @@ const MovieAdd = () => {
                             type="number"
                             className="form-control"
                             placeholder="Vstavi oceno filma"
+                            value={rating}
                             onChange={(e) => setRating(e.target.value)}
                         />
                     </div>
@@ -117,6 +143,6 @@ const MovieAdd = () => {
                 </form>
             </div>
         </>
-)
+    )
 }
-export default MovieAdd
+export default MovieEdit
