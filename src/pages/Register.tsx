@@ -8,6 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [password2, setPassword2] = useState("")
+    const [error, setError] = useState("")
 
     const url = "http://localhost:3000/auth/register"
     const [redirect, setRedirect] = useState(false);
@@ -20,11 +21,17 @@ const Register = () => {
             lastName: lastName,
             email: email,
             password: password,
+            password2: password2,
         }
 
         console.log(data)
 
-        let res = await axios.post(url, data)
+        if (password !== password2) {
+            setError("Gesli se ne ujemata")
+            return
+        }
+
+        const res = await axios.post(url, data)
 
         console.log(res)
 
@@ -68,6 +75,7 @@ const Register = () => {
                                id="password2Input" onChange={(e) => setPassword2(e.target.value)}/>
                         <label htmlFor="password2Input">Geslo 2x</label>
                     </div>
+                    {error && <p style={{ color: "red", fontSize: "2rem" }}>{error}</p> }
                     <button type="submit" className="btn btn-primary">Registriraj</button>
                 </form>
             </div>

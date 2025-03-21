@@ -10,7 +10,7 @@ const MovieEdit = () => {
     const[description, setDescription] = useState('');
     const[releaseDate, setReleaseDate] = useState('');
     const[genreId, setGenreId] = useState('');
-    const[genres,setGenres] = useState([]);
+    const[genres,setGenres] = useState<{id:number; title:string}[]>([]);
     const[rating, setRating] = useState('');
     const[redirect, setRedirect] = useState(false);
 

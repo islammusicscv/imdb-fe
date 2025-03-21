@@ -1,5 +1,12 @@
+interface Movie {
+    id: number;
+    title: string;
+    description: string;
+    release_date: Date;
+    rating: number;
+}
 
-const Card = ({data, deleteMovie, editMovie}:{data, deleteMovie: (id: number) => void, editMovie: (id: number) => void}) => {
+const Card = ({data, deleteMovie, editMovie}:{data:Movie, deleteMovie: (id: number) => void, editMovie: (id: number) => void}) => {
   return (
       <>
           <div className="card shadow-sm">

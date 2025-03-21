@@ -4,9 +4,17 @@ import Card from "../commponents/Card.tsx";
 import api from "../api/axios.ts";
 import {useNavigate} from "react-router-dom";
 
+interface Movie {
+    id: number;
+    title: string;
+    description: string;
+    release_date: Date;
+    rating: number;
+}
+
 const Movies = () => {
     const [errorMessage, setErrorMessage] = useState("")
-    const [movies, setMovies] = useState([])
+    const [movies, setMovies] = useState<Movie[]>([])
     const url = "movies"
 
     const nav = useNavigate()
@@ -58,6 +66,11 @@ const Movies = () => {
         <>
             <div className="album py-5 bg-body-tertiary">
                 <div className="container">
+                    {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                            {errorMessage}
+                        </div>
+                    )}
                     <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         <div className="col">
                             {
